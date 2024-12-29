@@ -16,7 +16,7 @@ public class Model extends Observable {
     private int maxScore;
     /** True iff game is ended. */
     private boolean gameOver;
-
+    private boolean moved = false;
     /* Coordinate System: column C, row R of the board (where row 0,
      * column 0 is the lower-left corner of the board) will correspond
      * to board.tile(c, r).  Be careful! It works like (x, y) coordinates.
@@ -111,14 +111,59 @@ public class Model extends Observable {
         changed = false;
 
         // TODO: Modify this.board (and perhaps this.score) to account
+        this.board.setViewingPerspective(side);
+        for(int i = 0; i < this.size(); i++){
+            this.tiltColumn(this.board, i);
+        }
+        this.board.setViewingPerspective(Side.NORTH);
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
         checkGameOver();
+        if (moved) {
+            changed = true;
+        }
         if (changed) {
             setChanged();
+            moved = false;
         }
         return changed;
+    }
+
+    public void tiltColumn(Board b, int x) {
+        // TODO: Task 7. Fill in this function.
+        boolean merged = false;
+        for (int y = b.size() - 2; y >= 0; y--){
+            if (tile(x, y) != null) {
+                merged = this.moveTileUpAsFarAsPossible(b, x, y, merged);
+            }
+        }
+    }
+
+    public boolean moveTileUpAsFarAsPossible(Board b, int x, int y ,Boolean merged) {
+        Tile currTile = b.tile(x, y);
+        int myValue = currTile.value();
+        int targetY = y;
+
+        // TODO: Tasks 5, 6, and 10. Fill in this function.
+        while (targetY + 1 < b.size()){
+            if (b.tile(x, targetY + 1) == null) {
+                targetY++;
+            } else {
+                break;
+            }
+        }
+        if (targetY + 1 < b.size()
+                && b.tile(x, targetY + 1).value() == myValue
+                && !merged){
+            targetY++;
+            this.score += myValue * 2;
+        }
+        if (targetY != y){
+            moved = true;
+            return b.move(x, targetY, currTile);
+        }
+        return false;
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -138,6 +183,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++){
+            for (int j = 0; j < b.size(); j++){
+                if (b.tile(i, j) == null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +200,13 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++){
+            for (int j = 0; j < b.size(); j++){
+                if (b.tile(i, j) != null && b.tile(i, j).value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,8 +218,26 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)){
+            return true;
+        }
+        for (int i = 0; i < b.size(); i++){
+            for (int j = 0; j < b.size(); j++){
+                if (i + 1 < b.size()){
+                    if (b.tile(i, j).value() == b.tile(i + 1, j).value()){
+                        return true;
+                    }
+                }
+                if (j + 1 < b.size()){
+                    if (b.tile(i, j).value() == b.tile(i, j + 1).value()){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
+
 
 
     @Override
