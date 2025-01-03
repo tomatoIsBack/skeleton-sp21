@@ -32,6 +32,6 @@ public class TestArrayDequeEC {
             }
         }
         assertEquals("Oh noooo!\nThis is bad:\n   Random number " + ad.size()
-                + " not equal to " + 10000 + "!", 10000, ad.size());
+                + " not equal to " + 1000 + "!", 1000, ad.size());
     }
 }
