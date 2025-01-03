@@ -52,7 +52,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         expandArrays();
         getStart();
         start--;
-        items[start] = item;
+        items[Math.floorMod(start, items.length)] = item;
         size++;
     }
 
