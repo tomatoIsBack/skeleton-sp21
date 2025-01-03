@@ -8,9 +8,9 @@ public class TestArrayDequeEC {
 
     @Test
     public void testRandomTest() {
-        ArrayDeque<Integer> ad = new ArrayDeque<> ();
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
         double numberBetweenZeroAndOne = StdRandom.uniform();
-        for(int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; i++) {
             if (numberBetweenZeroAndOne < 0.5) {
                 ad.addLast(i);
             } else {
@@ -22,9 +22,9 @@ public class TestArrayDequeEC {
 
     @Test
     public void testRandomTest2() {
-        ArrayDeque<Integer> ad = new ArrayDeque<> ();
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
         double numberBetweenZeroAndOne = StdRandom.uniform();
-        for(int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; i++) {
             if (numberBetweenZeroAndOne < 0.5) {
                 ad.addLast(i);
             } else {
