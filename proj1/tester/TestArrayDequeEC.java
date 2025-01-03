@@ -19,4 +19,19 @@ public class TestArrayDequeEC {
         }
         assertEquals(10000, ad.size());
     }
+
+    @Test
+    public void testRandomTest2() {
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        double numberBetweenZeroAndOne = StdRandom.uniform();
+        for(int i = 0; i < 10000; i++){
+            if (numberBetweenZeroAndOne < 0.5) {
+                ad.addLast(i);
+            } else {
+                ad.addFirst(i);
+            }
+        }
+        assertEquals("Oh noooo!\nThis is bad:\n   Random number " + ad.size()
+                + " not equal to " + 10000 + "!", 10000, ad.size());
+    }
 }
