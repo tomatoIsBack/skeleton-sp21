@@ -12,29 +12,35 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size = 0;
     }
 
+    private int getStart () {
+        start = Math.floorMod(start, items.length);
+        return start;
+    }
     private void expandArrays() {
         if (size == items.length) {
             T[] newitems = (T[]) new Object[items.length * 4];
-            int newStart = Math.floorMod(start, items.length);
-            if (newStart == 0) {
+            getStart();
+            if (start == 0) {
                 System.arraycopy(items, 0, newitems, 0, items.length);
             } else {
-                System.arraycopy(items, newStart, newitems, 0, items.length - newStart);
-                System.arraycopy(items, 0, newitems, items.length - newStart, newStart);
+                System.arraycopy(items, start, newitems, 0, items.length - start);
+                System.arraycopy(items, 0, newitems, items.length - start, start);
             }
             start = 0;
             items = newitems;
         }
     }
+
     private void shrinkArrays() {
         if (size < items.length / 4) {
             T[] newitems = (T[]) new Object[items.length / 2];
-            int newStart = Math.floorMod(start, items.length);
-            if (newStart + size <= items.length) {
-                System.arraycopy(items, newStart, newitems, 0, size);
+            getStart();
+            if (start + size <= items.length) {
+                System.arraycopy(items, start, newitems, 0, size);
             } else {
-                System.arraycopy(items, newStart, newitems, 0, items.length - newStart);
-                System.arraycopy(items, 0, newitems, items.length - newStart, newStart);
+                System.arraycopy(items, start, newitems, 0, items.length - start);
+                System.arraycopy(items, 0, newitems, items.length - start,
+                        size - (items.length - start));
             }
             start = 0;
             items = newitems;
@@ -44,7 +50,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addFirst(T item) {
         expandArrays();
-        start = Math.floorMod(start - 1, items.length);
+        getStart();
+        start--;
         items[start] = item;
         size++;
     }
@@ -97,6 +104,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
+        getStart();
         T item = items[start];
         start = Math.floorMod(start + 1, items.length);
         size--;
@@ -136,7 +144,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
         }
          */
-        if (!(o instanceof Deque)) {
+        if (!(o instanceof ArrayDeque)) {
             return false;
         }
         Deque other = (ArrayDeque) o;

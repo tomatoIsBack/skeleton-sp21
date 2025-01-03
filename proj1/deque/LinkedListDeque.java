@@ -130,7 +130,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             }
         }
          */
-        if (!(o instanceof Deque)) {
+        if (!(o instanceof LinkedListDeque)) {
             return false;
         }
         Deque other = (LinkedListDeque) o;
@@ -148,10 +148,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return recursive(sentinel.next, index);
     }
 
-    private T recursive(Node node, int index){
-        if (node == sentinel){
+    private T recursive(Node node, int index) {
+        if (node == sentinel) {
             return null;
-        } else if (index == 0){
+        } else if (index == 0) {
             return node.value;
         } else {
             return recursive(node.next, index - 1);
