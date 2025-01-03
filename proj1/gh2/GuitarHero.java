@@ -3,8 +3,8 @@ import edu.princeton.cs.algs4.StdAudio;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class GuitarHero {
-    private static final String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";;
-    private static final double cunstom = 440.0;
+    private static String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";;
+    private static double cunstom = 440.0;
 
     public static void main(String[] args) {
 

@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int start;
@@ -72,7 +72,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     private class DequeIterator implements Iterator<T> {
         private int count;
-        public DequeIterator() {
+        DequeIterator() {
             count = size;
         }
         @Override
@@ -136,7 +136,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             }
         }
          */
-        if (!(o instanceof Deque)){
+        if (!(o instanceof Deque)) {
             return false;
         }
         Deque other = (ArrayDeque) o;
