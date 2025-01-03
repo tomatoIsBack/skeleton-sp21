@@ -12,7 +12,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size = 0;
     }
 
-    private int getStart () {
+    private int getStart() {
         start = Math.floorMod(start, items.length);
         return start;
     }
@@ -144,13 +144,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             }
         }
          */
-        if (!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        Deque other = (ArrayDeque) o;
+        Deque other = (Deque) o;
         if (this.size() == other.size()) {
             for (int i = 0; i < this.size(); i++) {
-                if (this.get(i) != other.get(i)) {
+                if (!this.get(i).equals(other.get(i))) {
                     return false;
                 }
             }
