@@ -26,6 +26,20 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             items = newitems;
         }
     }
+    private void shrinkArrays() {
+        if (size < items.length / 4) {
+            T[] newitems = (T[]) new Object[items.length / 2];
+            int newStart = Math.floorMod(start, items.length);
+            if (newStart + size <= items.length) {
+                System.arraycopy(items, newStart, newitems, 0, size);
+            } else {
+                System.arraycopy(items, newStart, newitems, 0, items.length - newStart);
+                System.arraycopy(items, 0, newitems, items.length - newStart, newStart);
+            }
+            start = 0;
+            items = newitems;
+        }
+    }
 
     @Override
     public void addFirst(T item) {
@@ -42,10 +56,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         size++;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return this.size() == 0;
-    }
 
     @Override
     public int size() {
@@ -90,6 +100,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         T item = items[start];
         start = Math.floorMod(start + 1, items.length);
         size--;
+        shrinkArrays();
         return item;
     }
 
@@ -100,6 +111,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         }
         T item = items[Math.floorMod(start + size - 1, items.length)];
         size--;
+        shrinkArrays();
         return item;
     }
 

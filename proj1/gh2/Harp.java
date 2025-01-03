@@ -5,7 +5,7 @@ import deque.LinkedListDeque;
 
 
 //Note: This file will not compile until you complete the Deque implementations
-public class GuitarString {
+public class Harp {
     /** Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. We'll discuss this and
      * other topics in lecture on Friday. */
@@ -13,11 +13,11 @@ public class GuitarString {
     private static final double DECAY = .996; // energy decay factor
 
     /* Buffer for storing sound data. */
-     private Deque<Double> buffer;
+    private Deque<Double> buffer;
 
     /* Create a guitar string of the given frequency.  */
-    public GuitarString(double frequency) {
-        int count = (int) Math.round(SR / frequency);
+    public Harp(double frequency) {
+        int count = (int) Math.round(SR / frequency * 2);
         buffer = new LinkedListDeque<>();
         for (int i = 0; i < count; i++) {
             buffer.addFirst(0.0);
@@ -41,7 +41,7 @@ public class GuitarString {
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        buffer.addLast((buffer.removeFirst() + buffer.get(0)) * 0.5 * DECAY);
+        buffer.addLast((buffer.removeFirst() + buffer.get(0)) * 0.5 * DECAY * -1);
     }
 
     /* Return the double at the front of the buffer. */
