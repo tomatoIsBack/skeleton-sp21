@@ -24,7 +24,7 @@ public class TestBSTMap {
         for (int i = 0; i < 455; i++) {
             b.put("hi" + i, 1 + i);
         }
-        b.printInOrder(b.getRoot());
+        b.printInOrder();
     }
 
     //assumes put/size/containsKey/get work

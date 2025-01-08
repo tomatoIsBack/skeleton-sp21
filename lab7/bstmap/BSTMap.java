@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable<K>, V> implements Map61B<K,V>, Iterable<K>{
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K,V>{
     private int size;
     private BSTNode root;
 
@@ -141,26 +141,54 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K,V>, Iterable
         }
     }
 
-    public void printInOrder(BSTNode node) {
-        if (node != null){
-            printInOrder(node.left);
-            System.out.println(node.key + " " + node.value);
-            printInOrder(node.right);
-        }
+    public void printInOrder() {
+        printRecursive(root);
     }
-    public BSTNode getRoot() {
-        return this.root;
+    private void printRecursive(BSTNode node){
+        if (node != null){
+            printRecursive(node.left);
+            System.out.println(node.key + " " + node.value);
+            printRecursive(node.right);
+        }
     }
 
     @Override
     public V remove(K key) {
-        if (root == null) {
-            return null;
+        V result = get(key);
+        if (result != null) {
+            size--;
         }
-        return null;
+        root = removeRecursive(root, key);
+        return result;
+
     }
 
-    public BSTNode remove (BSTNode node, K key) {
-        return null;
+    private BSTNode removeRecursive (BSTNode node, K key) {
+        if (node == null) {
+            return null;
+        }
+        if (key.compareTo(node.key) > 0) {
+            node.right =  removeRecursive(node.right, key);
+        } else if (key.compareTo(node.key) < 0) {
+            node.left =  removeRecursive(node.left, key);
+        } else {
+            if (node.left == null) {
+                node = node.right;
+            } else if (node.right == null) {
+                node = node.left;
+            } else {
+                BSTNode min = findMin(node.right);
+                node.key = min.key;
+                node.value = min.value;
+                node.right =  removeRecursive(node.right, min.key);
+            }
+        }
+        return node;
+    }
+    private BSTNode findMin(BSTNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
     }
 }
