@@ -1,5 +1,7 @@
 package bstmap;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
 import java.util.Set;
 
 /* Your implementation BSTMap should implement this interface. To do so,
@@ -27,16 +29,25 @@ public interface Map61B<K, V> extends Iterable<K> {
 
     /* Returns a Set view of the keys contained in this map. Not required for Lab 7.
      * If you don't implement this, throw an UnsupportedOperationException. */
-    Set<K> keySet();
+    default Set<K> keySet() {
+        throw new UnsupportedOperationException();
+    }
 
     /* Removes the mapping for the specified key from this map if present.
      * Not required for Lab 7. If you don't implement this, throw an
      * UnsupportedOperationException. */
-    V remove(K key);
+    default V remove(K key) {
+        throw new UnsupportedOperationException();
+    }
 
     /* Removes the entry for the specified key only if it is currently mapped to
      * the specified value. Not required for Lab 7. If you don't implement this,
      * throw an UnsupportedOperationException.*/
-    V remove(K key, V value);
+    default V remove(K key, V value) {
+        throw new UnsupportedOperationException();
+    }
 
+    default Iterator<K> iterator() {
+        throw new UnsupportedOperationException();
+    }
 }
