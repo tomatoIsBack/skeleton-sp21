@@ -162,7 +162,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K,V>{
         return result;
 
     }
+    public V remove(K key, V value) {
+        V result = get(key);
+        if (result == null || !result.equals(value)) {
+            return null;
+        }
+        size--;
+        root = removeRecursive(root, key);
+        return result;
 
+    }
     private BSTNode removeRecursive (BSTNode node, K key) {
         if (node == null) {
             return null;
